@@ -4,10 +4,10 @@ import { db } from "../db/db";
 import { PostTypes } from "../db/post-types";
 
 const postScheme = Joi.object({
-    title: Joi.string().max(30).required(),
-    shortDescription: Joi.string().max(100).required(),
-    content: Joi.string().max(1000).required(),
-    blogId: Joi.string().required(),
+    title: Joi.string().max(30).trim().required(),
+    shortDescription: Joi.string().trim().max(100).required(),
+    content: Joi.string().trim().max(1000).required(),
+    blogId: Joi.string().trim().required(),
 });
 
 export const createPostController = (req: Request, res: Response) => {

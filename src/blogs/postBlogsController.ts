@@ -5,13 +5,14 @@ import { Request, Response } from 'express';
 import { db } from "../db/db";
 
 const createBlogSchema = Joi.object({
-    name: Joi.string().max(15).required(),
-    description: Joi.string().max(500).required(),
-    websiteUrl: Joi.string().max(100).pattern(new RegExp('^https://([a-zA-Z0-9_-]+\\.)+[a-zA-Z0-9_-]+(\\/[a-zA-Z0-9_-]+)*\\/?$')).required()
+    name: Joi.string().max(15).trim().required(),
+    description: Joi.string().max(500).trim().required(),
+    websiteUrl: Joi.string().max(100).trim().pattern(new RegExp('^https://([a-zA-Z0-9_-]+\\.)+[a-zA-Z0-9_-]+(\\/[a-zA-Z0-9_-]+)*\\/?$')).required()
 });
 
 export const postBlogsController = (req: Request, res: Response) => {
-    const { error, value } = createBlogSchema.validate(req.body, { abortEarly: false });
+    const {name, description, websiteUrl} = req.body;
+    const { error, value } = createBlogSchema.validate({name, description, websiteUrl}, { abortEarly: false });
 
     if (error) {
         return res.status(400).json({
