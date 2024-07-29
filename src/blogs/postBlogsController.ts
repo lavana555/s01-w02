@@ -22,7 +22,7 @@ export const postBlogsController = (req: Request, res: Response) => {
     }
 
     const newBlog: BlogTypes = {
-        id: Math.floor(Date.now() + Math.random() * 1000),
+        id: Math.floor(Date.now() + Math.random() * 1000).toString(),
         name: value.name,
         description: value.description,
         websiteUrl: value.websiteUrl

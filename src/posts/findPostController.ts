@@ -5,7 +5,7 @@ import {db} from "../db/db";
 
 
 const PostIdScheme = Joi.object({
-    id: Joi.number().integer().required()
+    id:Joi.string().required()
 })
 
 export const findPostController = (req: Request, res: Response) => {
@@ -19,7 +19,7 @@ export const findPostController = (req: Request, res: Response) => {
             }))
         });
     }
-    const findPost = db.posts.find(({id}) => id === +value.id);
+    const findPost = db.posts.find(({id}) => id === value.id);
     if(findPost) {
       return  res.status(200).json(findPost);
     }

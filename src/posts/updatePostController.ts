@@ -14,7 +14,7 @@ const PostSchema = Joi.object({
 });
 
 const updatePostSendReq = (bodyValue:any, paramsValue:any, res:any) => {
-    const postIndex = db.posts.findIndex(({ id }) => id === +paramsValue.id);
+    const postIndex = db.posts.findIndex(({ id }) => id === paramsValue.id);
     if (postIndex !== -1) {
         db.posts[postIndex] = {
             ...db.posts[postIndex],
@@ -56,7 +56,7 @@ export const updatePostController = (req: Request, res: Response) => {
     }
 
     if (bodyValue.blogId) {
-        const findBlog = db.blogs.find(({ id }) => id === +bodyValue.blogId);
+        const findBlog = db.blogs.find(({ id }) => id === bodyValue.blogId);
         if (!findBlog) {
             return res.status(400).json({
                 errorMessage: [

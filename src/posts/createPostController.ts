@@ -22,15 +22,15 @@ export const createPostController = (req:Request, res:Response) => {
             }))
         })
     }
-    const findBlog = db.blogs.find(({id}) => id === +value.blogId);
+    const findBlog = db.blogs.find(({id}) => id === value.blogId);
 
     if(findBlog) {
         const post: PostTypes  = {
-            id: Math.floor(Date.now() + Math.random() * 1000),
+            id: Math.floor(Date.now() + Math.random() * 1000).toString(),
             shortDescription: value.shortDescription,
             content: value.content,
             title: value.title,
-            blogId: +findBlog.id,
+            blogId: findBlog.id,
             blogName: findBlog.blogName,
         }
         db.posts.push(post);

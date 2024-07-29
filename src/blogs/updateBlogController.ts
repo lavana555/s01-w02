@@ -5,7 +5,7 @@ import {db} from "../db/db";
 
 
 const findBlogScheme = Joi.object({
-    id: Joi.number().integer().required()
+    id: Joi.string().required()
 })
 const blogScheme = Joi.object({
     name: Joi.string().max(40),
@@ -34,7 +34,7 @@ export const updateBlogController = (req:Request, res: Response) => {
             }))
         })
     }
-    const blogIndex =db.blogs.findIndex(({id})=> id === +paramsValue.id);
+    const blogIndex =db.blogs.findIndex(({id})=> id === paramsValue.id);
     if(blogIndex !== -1) {
         db.blogs[blogIndex] = {
             ...db.blogs[blogIndex],

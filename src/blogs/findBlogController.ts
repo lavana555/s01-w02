@@ -1,35 +1,37 @@
 import Joi from "joi";
-import { Request, Response } from 'express';
-import { db } from "../db/db";
+import {Request, Response} from 'express'
+import {db} from "../db/db";
 
-const findBlogSchema = Joi.object({
-    id: Joi.number().integer().required()
-});
 
-export const findBlogController = (req: Request, res: Response) => {
-    const { error: paramsError, value: paramsValue } = findBlogSchema.validate(req.params);
+const findBlogScheme = Joi.object({
+    id:Joi.string().required()
+})
 
-    if (paramsError) {
-        return res.status(400).json({
-            errorMessage: paramsError.details.map(err => ({
+
+
+export const findBlogController = (req: Request, res:Response) => {
+    const {error:paramsError, value:paramsValue} = findBlogScheme.validate(req.params);
+
+    if(paramsError) {
+        return res.status(404).json({
+            errorMessage: paramsError.details.map(err=>({
                 message: err.message,
                 field: err.context?.key
             }))
-        });
+        })
     }
-
-    const findValue = db.blogs.find(({ id }) => id === +paramsValue.id);
-
-    if (findValue) {
-        return res.status(200).json(findValue);
+    const findValue = db.blogs.find(({id})=> id === paramsValue.id)
+    if(findValue) {
+       return  res.status(200).json(findValue)
     } else {
-        return res.status(404).json({
+        return res.status(400).json({
             errorMessage: [
                 {
                     message: 'Blog not found',
                     field: "id"
                 }
             ]
-        });
+        })
     }
-};
+
+}

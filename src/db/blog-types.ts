@@ -1,7 +1,7 @@
 
 
 export interface BlogTypes {
-    id: number,
+    id: string,
     name: string,
     description: string,
     websiteUrl: string,
