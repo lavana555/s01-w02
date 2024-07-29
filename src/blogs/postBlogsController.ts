@@ -11,8 +11,8 @@ const createBlogSchema = Joi.object({
 });
 
 export const postBlogsController = (req: Request, res: Response) => {
-    const {name, description, websiteUrl} = req.body
-    const { error, value } = createBlogSchema.validate({name, description, websiteUrl}, { abortEarly: false });
+    const { error, value } = createBlogSchema.validate(req.body, { abortEarly: false });
+
     if (error) {
         return res.status(400).json({
             errorsMessages: error.details.map(err => ({
