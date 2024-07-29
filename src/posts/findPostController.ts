@@ -12,7 +12,7 @@ export const findPostController = (req: Request, res: Response) => {
     const {error, value} = PostIdScheme.validate(req.params)
 
     if(error) {
-        return res.status(400).json({
+        return res.status(404).json({
             errorMessage: error.details.map(err => ({
                 message: err.message,
                 field: err.context?.key

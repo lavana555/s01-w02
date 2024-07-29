@@ -38,7 +38,7 @@ export const updatePostController = (req: Request, res: Response) => {
     const { error: bodyError, value: bodyValue } = PostSchema.validate(req.body);
 
     if (paramsError) {
-        return res.status(400).json({
+        return res.status(404).json({
             errorMessage: paramsError.details.map(err => ({
                 message: err.message || null,
                 field: err.context?.key || null

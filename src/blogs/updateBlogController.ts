@@ -19,7 +19,7 @@ export const updateBlogController = (req:Request, res: Response) => {
     const {error:bodyError, value:bodyValue} = blogScheme.validate(req.body)
 
     if(paramsError) {
-        res.status(400).json({
+        res.status(404).json({
             errorMessage: paramsError.details.map(err=>({
                 message: err.message,
                 field: err.context?.key

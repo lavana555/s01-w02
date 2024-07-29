@@ -24,7 +24,7 @@ export const findBlogController = (req: Request, res:Response) => {
     if(findValue) {
        return  res.status(200).json(findValue)
     } else {
-        return res.status(400).json({
+        return res.status(404).json({
             errorMessage: [
                 {
                     message: 'Blog not found',
