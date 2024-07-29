@@ -35,7 +35,8 @@ const updatePostSendReq = (bodyValue:any, paramsValue:any, res:any) => {
 
 export const updatePostController = (req: Request, res: Response) => {
     const { error: paramsError, value: paramsValue } = PostIdSchema.validate(req.params);
-    const { error: bodyError, value: bodyValue } = PostSchema.validate(req.body);
+    const {title, shortDescription, content, blogId} = req.body
+    const { error: bodyError, value: bodyValue } = PostSchema.validate({title, shortDescription, content, blogId}, { abortEarly: false });
 
     if (paramsError) {
         return res.status(404).json({

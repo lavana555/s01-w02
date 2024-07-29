@@ -13,7 +13,8 @@ const postScheme = Joi.object({
 
 
 export const createPostController = (req:Request, res:Response) => {
-    const {error, value} = postScheme.validate(req.body,  { abortEarly: false });
+    const {title, shortDescription, content, blogId} = req.body
+    const {error, value} = postScheme.validate({title, shortDescription, content, blogId},  { abortEarly: false });
     if(error) {
         return res.status(400).jsonp({
             errorMessage: error.details.map(err => ({

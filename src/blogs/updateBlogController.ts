@@ -16,7 +16,8 @@ const blogScheme = Joi.object({
 
 export const updateBlogController = (req:Request, res: Response) => {
     const {error:paramsError, value:paramsValue} = findBlogScheme.validate(req.params)
-    const {error:bodyError, value:bodyValue} = blogScheme.validate(req.body)
+    const {name, description, websiteUrl} = req.body
+    const {error:bodyError, value:bodyValue} = blogScheme.validate({name, description, websiteUrl}, { abortEarly: false })
 
     if(paramsError) {
         res.status(404).json({
