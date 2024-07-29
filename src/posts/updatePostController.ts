@@ -47,27 +47,27 @@ export const updatePostController = (req: Request, res: Response) => {
         });
     }
 
+    let errorsMessages = [];
+
     if (bodyError) {
-        return res.status(400).json({
-            errorsMessages: bodyError.details.map(err => ({
-                message: err.message || null,
-                field: err.context?.key || null
-            }))
-        });
+        errorsMessages = bodyError.details.map(err => ({
+            message: err.message || null,
+            field: err.context?.key || null
+        }));
     }
 
     if (bodyValue.blogId) {
         const findBlog = db.blogs.find(({ id }) => id === bodyValue.blogId);
         if (!findBlog) {
-            return res.status(400).json({
-                errorsMessages: [
-                    {
-                        message: 'Blog not found',
-                        field: "blogId"
-                    }
-                ]
+            errorsMessages.push({
+                message: 'Blog not found',
+                field: "blogId"
             });
         }
+    }
+
+    if (errorsMessages.length > 0) {
+        return res.status(400).json({ errorsMessages });
     }
 
     return updatePostSendReq(bodyValue, paramsValue, res);

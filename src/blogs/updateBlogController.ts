@@ -31,7 +31,7 @@ export const updateBlogController = (req:Request, res: Response) => {
         res.status(400).json({
             errorsMessages: bodyError.details.map(err=>({
                 message: err.message,
-                filed: err.context?.key
+                field: err.context?.key
             }))
         })
     }
@@ -47,7 +47,7 @@ export const updateBlogController = (req:Request, res: Response) => {
             errorsMessages: [
                 {
                     message: 'Blog not found',
-                    filed: "id"
+                    field: "id"
                 }
             ]
         })
