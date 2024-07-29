@@ -4,7 +4,7 @@ import {db} from "../db/db";
 
 
 const postIdScheme = Joi.object ({
-    id:Joi.number().integer().required()
+    id:Joi.string().required()
 })
 
 export const deletePostController = (req: Request, res: Response) => {
@@ -17,7 +17,7 @@ export const deletePostController = (req: Request, res: Response) => {
             }))
         })
     }
-    const findPostIndex = db.posts.findIndex(({id})=> id ===+value.id);
+    const findPostIndex = db.posts.findIndex(({id})=> id ===value.id);
     if(!findPostIndex) {
         db.posts.splice(findPostIndex, 1);
         return res.status(204).send()

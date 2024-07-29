@@ -3,7 +3,7 @@ import {Request, Response} from 'express'
 import {db} from "../db/db";
 
 const blogIdScheme = Joi.object({
-    id:Joi.number().integer().required()
+    id:Joi.string().required()
 })
 
 export const deleteBlogController = (req:Request, res:Response) => {
@@ -17,7 +17,7 @@ export const deleteBlogController = (req:Request, res:Response) => {
             }))
         })
     }
-    const blogIndex = db.blogs.findIndex(({id})=> id === +value.id);
+    const blogIndex = db.blogs.findIndex(({id})=> id === value.id);
     if(blogIndex !== -1) {
         db.blogs.splice(blogIndex,1);
         res.status(204).send()
