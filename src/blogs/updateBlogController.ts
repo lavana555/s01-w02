@@ -29,7 +29,7 @@ export const updateBlogController = (req:Request, res: Response) => {
     }
     if(bodyError) {
         res.status(400).json({
-            errorMessage: bodyError.details.map(err=>({
+            errorsMessages: bodyError.details.map(err=>({
                 message: err.message,
                 filed: err.context?.key
             }))
@@ -44,7 +44,7 @@ export const updateBlogController = (req:Request, res: Response) => {
         res.status(204).send();;
     } else {
         res.status(404).json({
-            errorMessage: [
+            errorsMessages: [
                 {
                     message: 'Blog not found',
                     filed: "id"

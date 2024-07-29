@@ -13,7 +13,7 @@ const PostSchema = Joi.object({
     blogId: Joi.string()
 });
 
-const updatePostSendReq = (bodyValue:any, paramsValue:any, res:any) => {
+const updatePostSendReq = (bodyValue: any, paramsValue: any, res: any) => {
     const postIndex = db.posts.findIndex(({ id }) => id === paramsValue.id);
     if (postIndex !== -1) {
         db.posts[postIndex] = {
@@ -24,7 +24,7 @@ const updatePostSendReq = (bodyValue:any, paramsValue:any, res:any) => {
         return res.status(204).send();
     }
     return res.status(404).json({
-        errorMessage: [
+        errorsMessages: [
             {
                 message: 'Post not found',
                 field: "id"
@@ -35,12 +35,12 @@ const updatePostSendReq = (bodyValue:any, paramsValue:any, res:any) => {
 
 export const updatePostController = (req: Request, res: Response) => {
     const { error: paramsError, value: paramsValue } = PostIdSchema.validate(req.params);
-    const {title, shortDescription, content, blogId} = req.body
-    const { error: bodyError, value: bodyValue } = PostSchema.validate({title, shortDescription, content, blogId}, { abortEarly: false });
+    const { title, shortDescription, content, blogId } = req.body;
+    const { error: bodyError, value: bodyValue } = PostSchema.validate({ title, shortDescription, content, blogId }, { abortEarly: false });
 
     if (paramsError) {
         return res.status(404).json({
-            errorMessage: paramsError.details.map(err => ({
+            errorsMessages: paramsError.details.map(err => ({
                 message: err.message || null,
                 field: err.context?.key || null
             }))
@@ -49,7 +49,7 @@ export const updatePostController = (req: Request, res: Response) => {
 
     if (bodyError) {
         return res.status(400).json({
-            errorMessage: bodyError.details.map(err => ({
+            errorsMessages: bodyError.details.map(err => ({
                 message: err.message || null,
                 field: err.context?.key || null
             }))
@@ -60,7 +60,7 @@ export const updatePostController = (req: Request, res: Response) => {
         const findBlog = db.blogs.find(({ id }) => id === bodyValue.blogId);
         if (!findBlog) {
             return res.status(400).json({
-                errorMessage: [
+                errorsMessages: [
                     {
                         message: 'Blog not found',
                         field: "blogId"

@@ -15,7 +15,7 @@ export const postBlogsController = (req: Request, res: Response) => {
     const { error, value } = createBlogSchema.validate({name, description, websiteUrl}, { abortEarly: false });
     if (error) {
         return res.status(400).json({
-            errorMessage: error.details.map(err => ({
+            errorsMessages: error.details.map(err => ({
                 message: err.message || null,
                 field: err.path[0] || null
             }))
