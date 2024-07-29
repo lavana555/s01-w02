@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 import { db } from "../db/db";
 
 const createBlogSchema = Joi.object({
-    name: Joi.string().max(25).required(),
+    name: Joi.string().max(15).required(),
     description: Joi.string().max(500).required(),
     websiteUrl: Joi.string().max(100).pattern(new RegExp('^https://([a-zA-Z0-9_-]+\\.)+[a-zA-Z0-9_-]+(\\/[a-zA-Z0-9_-]+)*\\/?$')).required()
 });

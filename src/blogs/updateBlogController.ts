@@ -8,8 +8,8 @@ const findBlogScheme = Joi.object({
     id: Joi.string().required()
 })
 const blogScheme = Joi.object({
-    name: Joi.string().max(40),
-    description: Joi.string().max(50),
+    name: Joi.string().max(40).required(),
+    description: Joi.string().max(50).required(),
     websiteUrl: Joi.string().max(100).pattern(new RegExp('^https://([a-zA-Z0-9_-]+\\.)+[a-zA-Z0-9_-]+(\\/[a-zA-Z0-9_-]+)*\\/?$')).required()
 })
 

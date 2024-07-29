@@ -15,11 +15,21 @@ export const createPostController = (req: Request, res: Response) => {
     const { error, value } = postScheme.validate({ title, shortDescription, content, blogId }, { abortEarly: false });
 
     if (error) {
+        const validationErrors = error.details.map(err => ({
+            message: err.message || null,
+            field: err.path[0] || null,
+        }));
+
+        const findBlog = db.blogs.find(({ id }) => id === blogId);
+        if (!findBlog) {
+            validationErrors.push({
+                message: 'Blog not found',
+                field: 'blogId',
+            });
+        }
+
         return res.status(400).json({
-            errorsMessages: error.details.map(err => ({
-                message: err.message || null,
-                field: err.path[0] || null,
-            })),
+            errorsMessages: validationErrors,
         });
     }
 
