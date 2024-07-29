@@ -10,7 +10,7 @@ export const deleteBlogController = (req:Request, res:Response) => {
     const {error, value} = blogIdScheme.validate(req.params);
 
     if(error) {
-        res.status(400).json({
+        res.status(404).json({
             errorMessage: error.details.map(err =>({
                 message: err.message,
                 field: err.context?.key
