@@ -32,7 +32,7 @@ export const createPostController = (req:Request, res:Response) => {
             content: value.content,
             title: value.title,
             blogId: findBlog.id,
-            blogName: findBlog.blogName,
+            blogName: findBlog.name,
         }
         db.posts.push(post);
         return res.status(201).json(post);
